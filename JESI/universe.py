@@ -11,7 +11,7 @@ import time
 class universe:
     """API Access to the /universe/ endpoints
     """
-    baseUrl = "https://esi.tech.ccp.is/latest"
+    base_url = "https://esi.tech.ccp.is/latest"
 
 
     def bloodlines(self):
@@ -65,7 +65,7 @@ class universe:
     def stargates(self,stargate_id):
         """Get information on a stargate
         """
-        response = requests.get(self.baseUrl+f"/universe/stargates/{stargate_id}")
+        response = requests.get(self.base_url+f"/universe/stargates/{stargate_id}")
         response.raise_for_status()
         return response.json()
 
@@ -77,7 +77,7 @@ class universe:
     def stations(self,station_id):
         """Get information on a station
         """
-        response = requests.get(self.baseUrl+f"/universe/stations/{station_id}")
+        response = requests.get(self.base_url+f"/universe/stations/{station_id}")
         response.raise_for_status()
         return response.json()
 
@@ -98,9 +98,9 @@ class universe:
         """Get a list of solar systems or Get information on a specific system
         """
         if system_id is None:
-            response = requests.get(self.baseUrl+f"/universe/systems/")
+            response = requests.get(self.base_url+f"/universe/systems/")
         else:
-            response = requests.get(self.baseUrl+f"/universe/systems/{system_id}")
+            response = requests.get(self.base_url+f"/universe/systems/{system_id}")
         response.raise_for_status()
         return response.json()
 
@@ -125,7 +125,7 @@ class universe:
                 for i in range(1,11):
                     page = i
                     params = {"page": page}
-                    future = session.get(self.baseUrl+f"/universe/types/",params=params)
+                    future = session.get(self.base_url+f"/universe/types/",params=params)
                     futureQueue.append(future)
 
                 while 1:
@@ -141,7 +141,7 @@ class universe:
 
                     # Queue up our next page (This is really 10 pages in the future)
                     params = {"page": page}
-                    future = session.get(self.baseUrl+f"/universe/types/",params=params)
+                    future = session.get(self.base_url+f"/universe/types/",params=params)
                     futureQueue.append(future)
 
                     page += 1
@@ -149,7 +149,7 @@ class universe:
 
         elif type(type_id) in [int,str]:
             params = {"type_id": type_id}
-            response = requests.get(self.baseUrl+f"/universe/types/{type_id}/",params=params)
+            response = requests.get(self.base_url+f"/universe/types/{type_id}/",params=params)
             response.raise_for_status()
             return response.json()
 
@@ -158,7 +158,7 @@ class universe:
             request_list = []
             for next_type_id in type_id:
                 params = {"type_id": next_type_id}
-                response = session.get(self.baseUrl+f"/universe/types/{next_type_id}/",params=params)
+                response = session.get(self.base_url+f"/universe/types/{next_type_id}/",params=params)
                 request_list.append(response)
 
             retVal = []
@@ -181,7 +181,7 @@ class universe:
                 for i in range(1,11):
                     page = i
                     params = {"page": page}
-                    future = session.get(self.baseUrl+f"/universe/types/",params=params)
+                    future = session.get(self.base_url+f"/universe/types/",params=params)
                     futureQueue.append(future)
 
                 while 1:
@@ -198,14 +198,14 @@ class universe:
 
                     # Queue up our next page (This is really 10 pages in the future)
                     params = {"page": page}
-                    future = session.get(self.baseUrl+f"/universe/types/",params=params)
+                    future = session.get(self.base_url+f"/universe/types/",params=params)
                     futureQueue.append(future)
 
                     page += 1
 
         elif type(type_id) in [int,str]:
             params = {"type_id": type_id}
-            response = requests.get(self.baseUrl+f"/universe/types/{type_id}/",params=params)
+            response = requests.get(self.base_url+f"/universe/types/{type_id}/",params=params)
             response.raise_for_status()
             yield response.json()
             return
@@ -216,7 +216,7 @@ class universe:
                 for next_type_id in type_id:
                     # print('q')
                     params = {"type_id": next_type_id}
-                    response = session.get(self.baseUrl+f"/universe/types/{next_type_id}/",params=params)
+                    response = session.get(self.base_url+f"/universe/types/{next_type_id}/",params=params)
                     future_list.append(response)
                     idx = 0
                     while len(future_list) > 10:

@@ -2,7 +2,7 @@
 
 
 class assets:
-    baseUrl = "https://esi.tech.ccp.is/latest"
+    base_url = "https://esi.tech.ccp.is/latest"
     token = token()
 
     # Should we move these into an assets class?

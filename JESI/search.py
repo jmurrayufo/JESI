@@ -8,7 +8,7 @@ from requests_futures.sessions import FuturesSession
 class search:
     """API Access to the /universe/ endpoints
     """
-    base = "https://esi.tech.ccp.is/latest"
+    base_url = "https://esi.tech.ccp.is/latest"
 
     def search(self,search,catagory=None,strict=False):
         """Search for ID's that match the search

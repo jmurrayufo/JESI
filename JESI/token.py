@@ -12,14 +12,14 @@ class token:
     # refreshToken = None
     # expiresAt = None
     initilized = False
-    tokenFile = Path("tokens.json")
+    token_file = Path("tokens.json")
 
     def __init__(self):
         # Do we have a token file?
         if token.initilized:
             return
-        elif token.tokenFile.is_file():
-            with open(token.tokenFile,'r') as fp:
+        elif token.token_file.is_file():
+            with open(token.token_file,'r') as fp:
                 data = json.load(fp)
             token.refreshToken = data['refresh_token']
             token.expiresAt = datetime.datetime.now()
@@ -54,7 +54,7 @@ class token:
         assert response.status_code == 200
         response = response.json()
 
-        with open(token.tokenFile,'w') as fp:
+        with open(token.token_file,'w') as fp:
             json.dump(response,fp)
         token.accessToken = response['access_token']
         token.refreshToken = response['refresh_token']
@@ -166,7 +166,7 @@ class token:
         assert response.status_code == 200
 
         response = response.json()
-        with open(token.tokenFile,'w') as fp:
+        with open(token.token_file,'w') as fp:
             json.dump(response,fp)
         token.accessToken = response['access_token']
         token.refreshToken = response['refresh_token']

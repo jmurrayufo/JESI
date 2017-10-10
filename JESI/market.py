@@ -9,7 +9,7 @@ from requests_futures.sessions import FuturesSession
 class market:
     """API Access to the /market/ endpoints
     """
-    baseUrl = "https://esi.tech.ccp.is/latest"
+    base_url = "https://esi.tech.ccp.is/latest"
 
 
     def groups(self,market_group_id=None):
@@ -27,7 +27,7 @@ class market:
           "type_id": 32772
         }
         """
-        response = requests.get(self.baseUrl+f"/markets/prices/")
+        response = requests.get(self.base_url+f"/markets/prices/")
         response.raise_for_status()
         return response.json()
 
@@ -39,7 +39,7 @@ class market:
             'region_id':region_id,
             'type_id':type_id
         }
-        response = requests.get(self.baseUrl + f"/markets/{region_id}/history/", params=params)
+        response = requests.get(self.base_url + f"/markets/{region_id}/history/", params=params)
         response.raise_for_status()
         return response.json()
 
@@ -49,7 +49,7 @@ class market:
             'region_id':region_id,
             'type_id':type_id
         }
-        response = requests.get(self.baseUrl + f"/markets/{region_id}/history/", params=params)
+        response = requests.get(self.base_url + f"/markets/{region_id}/history/", params=params)
         response.raise_for_status()
         for item in response.json():
             yield item
@@ -69,7 +69,7 @@ class market:
             i = 1
             while 1:
                 params = {'page':i}
-                response = requests.get(self.baseUrl+f"/markets/{region_id}/orders/",params=params)
+                response = requests.get(self.base_url+f"/markets/{region_id}/orders/",params=params)
                 data = response.json()
                 if response.status_code == 200 and len(data):
                     retVal.append(data)
@@ -78,7 +78,7 @@ class market:
 
         elif type_id is not None:
             params = {'type_id':i}
-            response = requests.get(self.baseUrl+f"/markets/{region_id}/orders/",params=params)
+            response = requests.get(self.base_url+f"/markets/{region_id}/orders/",params=params)
             data = response.json()
             if response.status_code == 200:
                 return data
@@ -87,7 +87,7 @@ class market:
 
         elif page > 0:
             params = {'page':page}
-            response = requests.get(self.baseUrl+f"/markets/{region_id}/orders/",params=params)
+            response = requests.get(self.base_url+f"/markets/{region_id}/orders/",params=params)
             data = response.json()
             if response.status_code == 200:
                 return data
@@ -107,7 +107,7 @@ class market:
         i = 1
         while 1:
             params = {'page':i}
-            response = requests.get(self.baseUrl+f"/markets/{region_id}/orders/",params=params)
+            response = requests.get(self.base_url+f"/markets/{region_id}/orders/",params=params)
             response.raise_for_status()
             data = response.json()
             if len(data):
@@ -125,7 +125,7 @@ class market:
         page = 1
         while 1:
             params = {'page':page}
-            response = requests.get(self.baseUrl+f"/markets/{region_id}/types/",params=params)
+            response = requests.get(self.base_url+f"/markets/{region_id}/types/",params=params)
             response.raise_for_status()
             data = response.json()
             if len(data):
@@ -139,7 +139,7 @@ class market:
         page = 1
         while 1:
             params = {'page':page}
-            response = requests.get(self.baseUrl+f"/markets/{region_id}/types/",params=params)
+            response = requests.get(self.base_url+f"/markets/{region_id}/types/",params=params)
             data = response.json()
             if response.status_code == 200 and len(data):
                 for order in data:

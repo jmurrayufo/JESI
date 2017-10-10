@@ -4,7 +4,7 @@ from .token import token
 
 
 class characters:
-    baseUrl = "https://esi.tech.ccp.is/latest"
+    base_url = "https://esi.tech.ccp.is/latest"
 
     def __init__(self):
         self.token = token()
@@ -39,7 +39,7 @@ class characters:
         params = {
             "character_ids": ",".join(character_ids),
         }
-        response = requests.get(self.baseUrl+"/characters/names/",params=params)
+        response = requests.get(self.base_url+"/characters/names/",params=params)
         response.raise_for_status()
         return response.json()
 
@@ -169,7 +169,7 @@ class characters:
             "character_id": character_id,
             "token": f"{self.token}"
         }
-        response = requests.get(self.baseUrl+f"/characters/{character_id}/location/",params=params)
+        response = requests.get(self.base_url+f"/characters/{character_id}/location/",params=params)
         response.raise_for_status()
         return response.json()
         #:/
@@ -237,7 +237,7 @@ class characters:
             "character_id": character_id,
             "token": f"{self.token}"
         }
-        response = requests.get(self.baseUrl+f"/characters/{character_id}/orders/",params=params)
+        response = requests.get(self.base_url+f"/characters/{character_id}/orders/",params=params)
         response.raise_for_status()
         return response.json()
 
