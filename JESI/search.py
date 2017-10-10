@@ -2,8 +2,6 @@ import requests
 from requests_futures.sessions import FuturesSession
 
 
-"""TODO Update me
-"""
 
 class search:
     """API Access to the /universe/ endpoints
@@ -40,4 +38,3 @@ class search:
                       "solarsystem",
                       "station",
                       "wormhole",]
-        raise NotImplementedError

@@ -1,10 +1,6 @@
 import requests
 from requests_futures.sessions import FuturesSession
-# session = FuturesSession(max_workers=10)
 
-
-"""MODULE DOC STRING
-"""
 
 class market:
     """API Access to the /market/ endpoints
@@ -13,6 +9,8 @@ class market:
 
 
     def groups(self,market_group_id=None):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
@@ -45,6 +43,8 @@ class market:
 
 
     def historyIter(self,region_id,type_id):
+        """Return an iterator of historical market statistics for the specified type in a region
+        """
         params = {
             'region_id':region_id,
             'type_id':type_id

@@ -14,11 +14,11 @@ class JESI:
     def __init__(self):
         """No arguements (yet)
         """
+        self.characters = characters()
         self.market = market()
         self.search = search()
         self.token = token()
         self.universe = universe()
-        self.characters = characters()
 
 
     def __str__(self):

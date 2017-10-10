@@ -28,6 +28,8 @@ class characters:
     """OFFICAL API ENDPOINTS"""
 
     def affiliation(self):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
@@ -44,120 +46,168 @@ class characters:
         return response.json()
 
     def characters(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def agents_research(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def attributes(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def blueprints(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def bookmarks(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def bookmarks(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/folders/
 
 
     def calendar(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def calendar(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/{event_id}/
 
 
     def calendar(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/{event_id}/attendees/
 
 
     def chat_channels(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def clones(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def contacts(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def contacts(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/labels/
 
 
     def contracts(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def contracts(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/{contract_id}/bids/
 
 
     def contracts(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/{contract_id}/items/
 
 
     def corporationhistory(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def cspa(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def fatigue(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def fittings(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def fittings(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/{fitting_id}/
 
 
     def implants(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def industry(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/jobs/
 
 
     def killmails(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/recent/
 
@@ -176,56 +226,78 @@ class characters:
 
 
     def loyalty(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/points/
 
 
     def mail(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def mail(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/labels/
 
 
     def mail(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/labels/{label_id}/
 
 
     def mail(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/lists/
 
 
     def mail(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/{mail_id}/
 
 
     def medals(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def notifications(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def notifications(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/contacts/
 
 
     def online(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def opportunities(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
@@ -243,58 +315,80 @@ class characters:
 
 
     def planets(self,character_id,planet_id=None):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/{planet_id}/
 
 
     def portrait(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def roles(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def search(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def ship(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def skillqueue(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def skills(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     def standings(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
     #TODO: Move this to the wallet class
     def wallet(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/
 
 
     #TODO: Move this to the wallet class
     def wallet(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/journal/
 
 
     #TODO: Move this to the wallet class
     def wallet(self,character_id):
+        """Not implemented
+        """
         raise NotImplementedError
         #:/transactions/
 

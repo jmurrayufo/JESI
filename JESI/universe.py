@@ -15,50 +15,74 @@ class universe:
 
 
     def bloodlines(self):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def categories(self,category_id=None):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def constellations(self,constellation_id):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def factions(self):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def graphics(self,graphic_id=None):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def groups(self,group_id=None):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def moons(self,moon_id):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def names(self,names):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def planets(self,planet_id):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def races(self):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def regions(self,region_id):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def schematics(self,schematic_id):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
@@ -71,6 +95,8 @@ class universe:
 
 
     def stars(self,star_id):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
@@ -83,14 +109,20 @@ class universe:
 
 
     def structures(self,structure_id):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def system_jumps(self):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
     def system_kills(self):
+        """Not implemented
+        """
         raise NotImplementedError
 
 
