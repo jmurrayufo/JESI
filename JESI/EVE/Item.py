@@ -5,8 +5,18 @@ from ..esiapi.Universe import Universe
 from ..esiapi.Search import Search
 
 class Item:
-    def __init__(self,source,make_valid=True):
-        """Base Item class and interaction point
+    def __init__(self,source,make_valid=True,cache=True):
+        """Base Item class and interaction point.
+
+        Keywork Arguemnts:
+        source -- Depending on type, will generate the item dynamicaly.
+            str: Assumed to be the name of the object.
+            int: Assumed to be the type_id of the object.
+            Item: Assumed to be Item to copy from.
+            Other: Errors out.
+        make_valid -- Determine if we should attempt to parse from eve's api
+            to complete the Item.
+        cache -- Enable caching (read/write to SQL)
         """
         if type(source) == str:
             self.name = source
