@@ -4,6 +4,7 @@ import collections
 import requests
 import time
 
+from ..EVE import Item
 
 """TODO Update me
 """

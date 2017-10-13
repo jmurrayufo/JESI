@@ -9,8 +9,10 @@ class Item:
         """
         if type(source) == str:
             self.name = source
+            self.type_id = None
 
         elif type(source) == int:
+            self.name = None
             self.type_id = source
 
         elif type(soruce) == Item:
@@ -35,7 +37,9 @@ class Item:
         
         # If we are not a copy, try to create
         if make_valid:
-            pass
+            if self.type_id == None:
+                # We need to find out our ID first!
+
             
 
 
