@@ -27,9 +27,30 @@ class universe:
 
 
     def constellations(self,constellation_id):
-        """Not implemented
+        """Get a list of constellations or Get information on a constellation
+
+        Returns:
+        {
+            "constellation_id": 20000009,
+            "name": "Mekashtad",
+            "position": {
+                "x": 67796138757472320,
+                "y": -70591121348560960,
+                "z": -59587016159270070
+            },
+            "region_id": 10000001,
+            "systems": [
+                20000302,
+                20000303
+            ]
+        }        
         """
-        raise NotImplementedError
+        if constellation_id is None:
+            response = requests.get(self.base_url+f"/universe/constellations/")
+        else:
+            response = requests.get(self.base_url+f"/universe/constellations/{constellation_id}")
+        response.raise_for_status()
+        return response.json()
 
 
     def factions(self):
@@ -74,10 +95,28 @@ class universe:
         raise NotImplementedError
 
 
-    def regions(self,region_id):
-        """Not implemented
+    def regions(self,region_id=None):
+        """Get a list of regions or Get information on a region
+
+        Returns:
+        List of region ids, or
+        {
+            "constellations": [
+                20000302,
+                20000303
+            ],
+            "description": "It has long been an established fact of civilization...",
+            "name": "Metropolis",
+            "region_id": 10000042
+        }
         """
-        raise NotImplementedError
+        if region_id is None:
+            response = requests.get(self.base_url+f"/universe/regions/")
+        else:
+            response = requests.get(self.base_url+f"/universe/regions/{region_id}")
+        response.raise_for_status()
+        return response.json()
+
 
 
     def schematics(self,schematic_id):

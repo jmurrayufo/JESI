@@ -8,7 +8,7 @@ class search:
     """
     base_url = "https://esi.tech.ccp.is/latest"
 
-    def search(self,search,catagory=None,strict=False):
+    def search(self,search,catagories=None,strict=False):
         """Search for ID's that match the search
         Response Example:
         {
