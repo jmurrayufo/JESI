@@ -1,11 +1,14 @@
 
 import copy
+import logging
 
 from ..esiapi.Universe import Universe
 from ..esiapi.Search import Search
-from ..SQL import SQL
+from ..SQL.SQL import SQL
 
 class Item:
+    log = logging.getLogger("JESI").getChild(__module__)
+    db = SQL()
     def __init__(self,source,make_valid=True,cache=True):
         """Base Item class and interaction point.
 

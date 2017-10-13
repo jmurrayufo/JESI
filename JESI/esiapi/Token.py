@@ -150,8 +150,12 @@ class Token:
         prepped = req.prepare()
         print("Please access SSO from the following link.")
         print("We only ever need to do this once.")
+        print()
         print(prepped.url)
-        print("Please paste the full url you were redirected to.")
+        print()
+        print("""Once you authorized the SOO, paste the full url you were 
+            redirected to. back in this application
+            """)
         print("Be aware, this URL will fail to load on your browser. Thats ok! Just paste the URL.")
 
         retUrl = input("> ")
