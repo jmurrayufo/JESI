@@ -17,7 +17,7 @@ class Token:
     token_file = Path("tokens.json")
     log = logging.getLogger("JESI").getChild(__module__)
 
-    def __init__(self,log_level=logging.DEBUG):
+    def __init__(self, cache=True, log_level=logging.DEBUG):
         Token.log.setLevel(log_level)
         # Do we have a token file?
         if Token.initilized:

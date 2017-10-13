@@ -10,11 +10,11 @@ class Market:
     base_url = "https://esi.tech.ccp.is/latest"
     log = logging.getLogger("JESI").getChild(__module__)
 
-    def __init__(self,log_level=logging.DEBUG):
+    def __init__(self, cache=True, log_level=logging.DEBUG):
         Market.log.setLevel(log_level)
         pass
 
-    def groups(self,market_group_id=None):
+    def groups(self, market_group_id=None):
         """Not implemented
         """
         raise NotImplementedError
@@ -36,7 +36,7 @@ class Market:
         return response.json()
 
 
-    def history(self,region_id,type_id):
+    def history(self, region_id,type_id):
         """Return a list of historical market statistics for the specified type in a region
         """
         params = {
@@ -48,7 +48,7 @@ class Market:
         return response.json()
 
 
-    def historyIter(self,region_id,type_id):
+    def historyIter(self, region_id,type_id):
         """Return an iterator of historical market statistics for the specified type in a region
         """
         params = {
@@ -62,7 +62,7 @@ class Market:
         return
 
 
-    def orders(self,region_id,page=-1,type_id=None):
+    def orders(self, region_id,page=-1,type_id=None):
         """Return orders for a region
 
         Keyword arguments:
@@ -103,7 +103,7 @@ class Market:
             raise AttributeError("Unknown argument combo")
 
 
-    def ordersIter(self,region_id,type_id=None):
+    def ordersIter(self, region_id,type_id=None):
         """Return orders for a region
 
         Keyword Arguments:
@@ -124,7 +124,7 @@ class Market:
             i += 1
 
 
-    def types(self,region_id,page=-1):
+    def types(self, region_id,page=-1):
         """Return a list of type IDs that have active orders in the region, for efficient market indexing.
         """
         returnList = []
@@ -141,7 +141,7 @@ class Market:
             page += 1
 
 
-    def typesIter(self,region_id,page=-1):
+    def typesIter(self, region_id,page=-1):
         page = 1
         while 1:
             params = {'page':page}

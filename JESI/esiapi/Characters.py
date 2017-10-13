@@ -13,7 +13,7 @@ class Characters:
     log = logging.getLogger("JESI").getChild(__module__)
 
 
-    def __init__(self,log_level=logging.DEBUG):
+    def __init__(self, cache=True, log_level=logging.DEBUG):
         Characters.log.setLevel(log_level)
         self.token = Token()
         pass
@@ -42,7 +42,7 @@ class Characters:
         raise NotImplementedError
 
 
-    def names(self,character_ids):
+    def names(self, character_ids):
         """List of id/name associations
         """
         assert type(character_ids) in [list,tuple] # Will become a comma separated list of character IDs
@@ -55,174 +55,174 @@ class Characters:
         return response.json()
 
 
-    def characters(self,character_id):
+    def characters(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
 
 
-    def agents_research(self,character_id):
-        """Not implemented
-        """
-        raise NotImplementedError
-        #:/
-
-
-    def attributes(self,character_id):
+    def agents_research(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def blueprints(self,character_id):
+    def attributes(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def bookmarks(self,character_id):
+    def blueprints(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def bookmarks(self,character_id):
+    def bookmarks(self, character_id):
+        """Not implemented
+        """
+        raise NotImplementedError
+        #:/
+
+
+    def bookmarks(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/folders/
 
 
-    def calendar(self,character_id):
+    def calendar(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def calendar(self,character_id):
+    def calendar(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/{event_id}/
 
 
-    def calendar(self,character_id):
+    def calendar(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/{event_id}/attendees/
 
 
-    def chat_channels(self,character_id):
+    def chat_channels(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def clones(self,character_id):
+    def clones(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def contacts(self,character_id):
+    def contacts(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def contacts(self,character_id):
+    def contacts(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/labels/
 
 
-    def contracts(self,character_id):
+    def contracts(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def contracts(self,character_id):
+    def contracts(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/{contract_id}/bids/
 
 
-    def contracts(self,character_id):
+    def contracts(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/{contract_id}/items/
 
 
-    def corporationhistory(self,character_id):
+    def corporationhistory(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def cspa(self,character_id):
+    def cspa(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def fatigue(self,character_id):
+    def fatigue(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def fittings(self,character_id):
+    def fittings(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def fittings(self,character_id):
+    def fittings(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/{fitting_id}/
 
 
-    def implants(self,character_id):
+    def implants(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def industry(self,character_id):
+    def industry(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/jobs/
 
 
-    def killmails(self,character_id):
+    def killmails(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/recent/
 
 
-    def location(self,character_id):
+    def location(self, character_id):
         """Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable.
         """
         params = {
@@ -235,84 +235,84 @@ class Characters:
         #:/
 
 
-    def loyalty(self,character_id):
+    def loyalty(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/points/
 
 
-    def mail(self,character_id):
+    def mail(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def mail(self,character_id):
+    def mail(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/labels/
 
 
-    def mail(self,character_id):
+    def mail(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/labels/{label_id}/
 
 
-    def mail(self,character_id):
+    def mail(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/lists/
 
 
-    def mail(self,character_id):
+    def mail(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/{mail_id}/
 
 
-    def medals(self,character_id):
+    def medals(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def notifications(self,character_id):
+    def notifications(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def notifications(self,character_id):
+    def notifications(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/contacts/
 
 
-    def online(self,character_id):
+    def online(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def opportunities(self,character_id):
+    def opportunities(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def orders(self,character_id):
+    def orders(self, character_id):
         """List market orders placed by a character
         """
         params = {
@@ -324,63 +324,63 @@ class Characters:
         return response.json()
 
 
-    def planets(self,character_id,planet_id=None):
+    def planets(self, character_id,planet_id=None):
         """Not implemented
         """
         raise NotImplementedError
         #:/{planet_id}/
 
 
-    def portrait(self,character_id):
+    def portrait(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def roles(self,character_id):
+    def roles(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def search(self,character_id):
+    def search(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def ship(self,character_id):
+    def ship(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def skillqueue(self,character_id):
+    def skillqueue(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def skills(self,character_id):
+    def skills(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
 
-    def standings(self,character_id):
+    def standings(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
         #:/
 
     #TODO: Move this to the wallet class
-    def wallet(self,character_id):
+    def wallet(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
@@ -388,7 +388,7 @@ class Characters:
 
 
     #TODO: Move this to the wallet class
-    def wallet(self,character_id):
+    def wallet(self, character_id):
         """Not implemented
         """
         raise NotImplementedError
@@ -396,7 +396,7 @@ class Characters:
 
 
     #TODO: Move this to the wallet class
-    def wallet(self,character_id):
+    def wallet(self, character_id):
         """Not implemented
         """
         raise NotImplementedError

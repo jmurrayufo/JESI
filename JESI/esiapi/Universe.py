@@ -16,7 +16,7 @@ class Universe:
     base_url = "https://esi.tech.ccp.is/latest"
     log = logging.getLogger("JESI").getChild(__module__)
 
-    def __init__(self,log_level=logging.DEBUG):
+    def __init__(self, cache=True, log_level=logging.DEBUG):
         Universe.log.setLevel(log_level)
         pass
 
@@ -27,13 +27,13 @@ class Universe:
         raise NotImplementedError
 
 
-    def categories(self,category_id=None):
+    def categories(self, category_id=None):
         """Not implemented
         """
         raise NotImplementedError
 
 
-    def constellations(self,constellation_id):
+    def constellations(self, constellation_id):
         """Get a list of constellations or Get information on a constellation
 
         Returns:
@@ -66,31 +66,31 @@ class Universe:
         raise NotImplementedError
 
 
-    def graphics(self,graphic_id=None):
+    def graphics(self, graphic_id=None):
         """Not implemented
         """
         raise NotImplementedError
 
 
-    def groups(self,group_id=None):
+    def groups(self, group_id=None):
         """Not implemented
         """
         raise NotImplementedError
 
 
-    def moons(self,moon_id):
+    def moons(self, moon_id):
         """Not implemented
         """
         raise NotImplementedError
 
 
-    def names(self,names):
+    def names(self, names):
         """Not implemented
         """
         raise NotImplementedError
 
 
-    def planets(self,planet_id):
+    def planets(self, planet_id):
         """Not implemented
         """
         raise NotImplementedError
@@ -102,7 +102,7 @@ class Universe:
         raise NotImplementedError
 
 
-    def regions(self,region_id=None):
+    def regions(self, region_id=None):
         """Get a list of regions or Get information on a region
 
         Returns:
@@ -126,13 +126,13 @@ class Universe:
 
 
 
-    def schematics(self,schematic_id):
+    def schematics(self, schematic_id):
         """Not implemented
         """
         raise NotImplementedError
 
 
-    def stargates(self,stargate_id):
+    def stargates(self, stargate_id):
         """Get information on a stargate
         """
         response = requests.get(self.base_url+f"/universe/stargates/{stargate_id}")
@@ -140,13 +140,13 @@ class Universe:
         return response.json()
 
 
-    def stars(self,star_id):
+    def stars(self, star_id):
         """Not implemented
         """
         raise NotImplementedError
 
 
-    def stations(self,station_id):
+    def stations(self, station_id):
         """Get information on a station
         """
         response = requests.get(self.base_url+f"/universe/stations/{station_id}")
@@ -154,7 +154,7 @@ class Universe:
         return response.json()
 
 
-    def structures(self,structure_id):
+    def structures(self, structure_id):
         """Not implemented
         """
         raise NotImplementedError
@@ -172,7 +172,7 @@ class Universe:
         raise NotImplementedError
 
 
-    def systems(self,system_id=None):
+    def systems(self, system_id=None):
         """Get a list of solar systems or Get information on a specific system
         """
         if system_id is None:
@@ -247,7 +247,7 @@ class Universe:
             return retVal
 
 
-    def typesIter(self,type_id=None):
+    def typesIter(self, type_id=None):
         """As with types, but return an iterator
         """
         if type_id is None:
