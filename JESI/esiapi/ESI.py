@@ -9,7 +9,7 @@ from .Characters import Characters
 
 
 
-class JESI:
+class ESI:
     """Interface to the EVE ESI API
     """
     log = logging.getLogger("JESI").getChild(__module__)

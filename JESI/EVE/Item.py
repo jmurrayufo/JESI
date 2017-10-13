@@ -3,12 +3,13 @@ import copy
 
 from ..esiapi.Universe import Universe
 from ..esiapi.Search import Search
+from ..SQL import SQL
 
 class Item:
     def __init__(self,source,make_valid=True,cache=True):
         """Base Item class and interaction point.
 
-        Keywork Arguemnts:
+        Keyword Arguments:
         source -- Depending on type, will generate the item dynamicaly.
             str: Assumed to be the name of the object.
             int: Assumed to be the type_id of the object.
