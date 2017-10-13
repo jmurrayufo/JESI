@@ -12,7 +12,9 @@ class Characters:
         pass
 
 
-    def characterIDs(self):
+    def characterID(self):
+        """Return the character ID active on the account
+        """
         baseURL = "https://login.eveonline.com/oauth/verify"
 
         headers = {
@@ -22,8 +24,6 @@ class Characters:
         }
         response = requests.get(baseURL,headers=headers)
         response.raise_for_status()
-        # print(response)
-        # print(response.json())
         return response.json()['CharacterID']
 
 
