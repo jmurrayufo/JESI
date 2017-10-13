@@ -8,7 +8,7 @@ import time
 """TODO Update me
 """
 
-class universe:
+class Universe:
     """API Access to the /universe/ endpoints
     """
     base_url = "https://esi.tech.ccp.is/latest"

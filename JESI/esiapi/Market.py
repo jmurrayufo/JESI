@@ -2,7 +2,7 @@ import requests
 from requests_futures.sessions import FuturesSession
 
 
-class market:
+class Market:
     """API Access to the /market/ endpoints
     """
     base_url = "https://esi.tech.ccp.is/latest"

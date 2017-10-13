@@ -1,7 +1,7 @@
 
 
 
-class assets:
+class Assets:
     base_url = "https://esi.tech.ccp.is/latest"
     token = token()
 

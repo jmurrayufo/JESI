@@ -1,13 +1,13 @@
 import requests
-from .token import token
+from .Token import Token
 
 
 
-class characters:
+class Characters:
     base_url = "https://esi.tech.ccp.is/latest"
 
     def __init__(self):
-        self.token = token()
+        self.token = Token()
         pass
 
     def characterIDs(self):

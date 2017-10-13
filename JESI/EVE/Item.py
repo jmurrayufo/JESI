@@ -1,17 +1,19 @@
 
 import copy
 
+from ..esiapi import Universe
+
 class Item:
-    def __init__(self,name=None,type_id=None,soruce=None,make_valid=True):
+    def __init__(self,source,make_valid=True):
         """Base Item class and interaction point
         """
-        if name:
-            self.name = name
+        if type(source) == str:
+            self.name = source
 
-        if type_id:
-            self.type_id = type_id
+        elif type(source) == int:
+            self.type_id = source
 
-        if soruce:
+        elif type(soruce) == Item:
             self.name = soruce.name
             self.type_id = soruce.type_id
             self.capacity = source.capacity  #(number, optional): capacity number ,
@@ -30,6 +32,12 @@ class Item:
             self.radius = source.radius  #(number, optional): radius number ,
             self.type_id = source.type_id  #(integer): type_id integer ,
             self.volume = source.volume  #(number, optional): volume number
+        
+        # If we are not a copy, try to create
+        if make_valid:
+            pass
+            
+
 
 
     def __str__(self):

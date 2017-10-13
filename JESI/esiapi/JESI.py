@@ -1,10 +1,10 @@
 
 
-from .market import market
-from .universe import universe
-from .search import search
-from .token import token
-from .characters import characters
+from .Market import Market
+from .Universe import Universe
+from .Search import Search
+from .Token import Token
+from .Characters import Characters
 
 
 
@@ -14,11 +14,11 @@ class JESI:
     def __init__(self):
         """No arguements (yet)
         """
-        self.characters = characters()
-        self.market = market()
-        self.search = search()
-        self.token = token()
-        self.universe = universe()
+        self.Characters = Characters()
+        self.Market = Market()
+        self.Search = Search()
+        self.Token = Token()
+        self.Universe = Universe()
 
 
     def __str__(self):

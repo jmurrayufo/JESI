@@ -3,7 +3,7 @@ from requests_futures.sessions import FuturesSession
 
 
 
-class search:
+class Search:
     """API Access to the /universe/ endpoints
     """
     base_url = "https://esi.tech.ccp.is/latest"

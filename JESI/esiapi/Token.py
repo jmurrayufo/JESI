@@ -7,7 +7,7 @@ import urllib.parse
 import datetime
 import textwrap
 
-class token:
+class Token:
     # accessToken = None
     # refreshToken = None
     # expiresAt = None
