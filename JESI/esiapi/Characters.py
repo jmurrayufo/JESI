@@ -6,9 +6,11 @@ from .Token import Token
 class Characters:
     base_url = "https://esi.tech.ccp.is/latest"
 
+
     def __init__(self):
         self.token = Token()
         pass
+
 
     def characterIDs(self):
         baseURL = "https://login.eveonline.com/oauth/verify"
@@ -44,6 +46,7 @@ class Characters:
         response = requests.get(self.base_url+"/characters/names/",params=params)
         response.raise_for_status()
         return response.json()
+
 
     def characters(self,character_id):
         """Not implemented

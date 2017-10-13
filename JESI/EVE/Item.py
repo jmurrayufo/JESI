@@ -1,7 +1,8 @@
 
 import copy
 
-from ..esiapi import Universe
+from ..esiapi.Universe import Universe
+from ..esiapi.Search import Search
 
 class Item:
     def __init__(self,source,make_valid=True):
@@ -16,8 +17,6 @@ class Item:
             self.type_id = source
 
         elif type(soruce) == Item:
-            self.name = soruce.name
-            self.type_id = soruce.type_id
             self.capacity = source.capacity  #(number, optional): capacity number ,
             self.description = source.description  #(string): description string ,
             self.dogma_attributes = copy.deepcopy(source.dogma_attributes)  #(Array[get_universe_types_type_id_dogma_attribute], optional): dogma_attributes array ,
@@ -37,11 +36,32 @@ class Item:
         
         # If we are not a copy, try to create
         if make_valid:
+            # TODO: We need to search SQL *first*!
             if self.type_id == None:
                 # We need to find out our ID first!
+                data = Search().search(self.name, ["inventorytype"], strict=True)
+                if len(data['inventorytype']) != 1:
+                    raise ValueError(f"Couldn't find {self.name} in search uniquely!")
+                self.type_id = data['inventorytype'][0]
 
+            data = Universe().types(self.type_id)
             
-
+            self.capacity = data.get('capacity',0)
+            self.description = data.get('description','')
+            self.dogma_attributes = data.get('dogma_attributes',[])
+            self.dogma_effects = data.get('dogma_effects',[])
+            self.graphic_id = data.get('graphic_id','')
+            self.group_id = data.get('group_id',None)
+            self.icon_id = data.get('icon_id',None)
+            self.market_group_id = data.get('market_group_id',None)
+            self.mass = data.get('mass')
+            self.name = data.get('name')
+            self.packaged_volume = data.get('packaged_volume',0)
+            self.portion_size = data.get('portion_size',0)
+            self.published = data.get('published',False)
+            self.radius = data.get('radius',0)
+            self.type_id = data.get('type_id')
+            self.volume = data.get('volume',0)
 
 
     def __str__(self):
