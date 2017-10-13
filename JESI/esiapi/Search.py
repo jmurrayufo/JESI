@@ -1,5 +1,7 @@
-import requests
+
 from requests_futures.sessions import FuturesSession
+import logging
+import requests
 
 
 
@@ -7,6 +9,11 @@ class Search:
     """API Access to the /universe/ endpoints
     """
     base_url = "https://esi.tech.ccp.is/latest"
+    log = logging.getLogger("JESI").getChild(__module__)
+
+    def __init__(self,log_level=logging.DEBUG):
+        Search.log.setLevel(log_level)
+        pass
 
     def search(self,search,categories=None,strict=False):
         """Search for ID's that match the search

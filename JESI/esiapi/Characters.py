@@ -1,13 +1,20 @@
+
+import logging
 import requests
+
 from .Token import Token
 
 
 
 class Characters:
+    """API to the /characters/ endpoints
+    """
     base_url = "https://esi.tech.ccp.is/latest"
+    log = logging.getLogger("JESI").getChild(__module__)
 
 
-    def __init__(self):
+    def __init__(self,log_level=logging.DEBUG):
+        Characters.log.setLevel(log_level)
         self.token = Token()
         pass
 

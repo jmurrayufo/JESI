@@ -1,11 +1,13 @@
+
 from base64 import b64encode
 from pathlib import Path
 from requests import Request, Session, post
-import json
-import re
-import urllib.parse
 import datetime
+import json
+import logging
+import re
 import textwrap
+import urllib.parse
 
 class Token:
     # accessToken = None
@@ -13,32 +15,34 @@ class Token:
     # expiresAt = None
     initilized = False
     token_file = Path("tokens.json")
+    log = logging.getLogger("JESI").getChild(__module__)
 
-    def __init__(self):
+    def __init__(self,log_level=logging.DEBUG):
+        Token.log.setLevel(log_level)
         # Do we have a token file?
-        if token.initilized:
+        if Token.initilized:
             return
-        elif token.token_file.is_file():
-            with open(token.token_file,'r') as fp:
+        elif Token.token_file.is_file():
+            with open(Token.token_file,'r') as fp:
                 data = json.load(fp)
-            token.refreshToken = data['refresh_token']
-            token.expiresAt = datetime.datetime.now()
+            Token.refreshToken = data['refresh_token']
+            Token.expiresAt = datetime.datetime.now()
             self._refreshToken()
         else:
             self.authorize()
-        token.initilized = True
+        Token.initilized = True
 
 
     def __str__(self):
-        if datetime.datetime.now() > token.expiresAt:
+        if datetime.datetime.now() > Token.expiresAt:
             self._refreshToken()
-        return f"{token.accessToken}"
+        return f"{Token.accessToken}"
 
 
     def myStr(self):
         retval = "token<"
-        retval += f"{token.accessToken[:5]}...{token.accessToken[-5:]}"
-        retval += f",{token.expiresAt - datetime.datetime.now()}"
+        retval += f"{Token.accessToken[:5]}...{Token.accessToken[-5:]}"
+        retval += f",{Token.expiresAt - datetime.datetime.now()}"
         retval += ">"
         return retval
 
@@ -48,17 +52,17 @@ class Token:
         headers = self.authHeaders()
         payload = {
             'grant_type':'refresh_token',
-            'refresh_token':f"{token.refreshToken}",
+            'refresh_token':f"{Token.refreshToken}",
         }
         response = post(tokenUrl, data=payload, headers=headers)
         assert response.status_code == 200
         response = response.json()
 
-        with open(token.token_file,'w') as fp:
+        with open(Token.token_file,'w') as fp:
             json.dump(response,fp)
-        token.accessToken = response['access_token']
-        token.refreshToken = response['refresh_token']
-        token.expiresAt = datetime.datetime.now() + datetime.timedelta(seconds=response['expires_in'])
+        Token.accessToken = response['access_token']
+        Token.refreshToken = response['refresh_token']
+        Token.expiresAt = datetime.datetime.now() + datetime.timedelta(seconds=response['expires_in'])
 
 
     def authHeaders(self):
@@ -166,8 +170,8 @@ class Token:
         assert response.status_code == 200
 
         response = response.json()
-        with open(token.token_file,'w') as fp:
+        with open(Token.token_file,'w') as fp:
             json.dump(response,fp)
-        token.accessToken = response['access_token']
-        token.refreshToken = response['refresh_token']
-        token.expiresAt = datetime.datetime.now() + datetime.timedelta(seconds=response['expires_in'])
+        Token.accessToken = response['access_token']
+        Token.refreshToken = response['refresh_token']
+        Token.expiresAt = datetime.datetime.now() + datetime.timedelta(seconds=response['expires_in'])

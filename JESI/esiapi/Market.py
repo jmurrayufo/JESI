@@ -1,12 +1,18 @@
-import requests
+
 from requests_futures.sessions import FuturesSession
+import logging
+import requests
 
 
 class Market:
     """API Access to the /market/ endpoints
     """
     base_url = "https://esi.tech.ccp.is/latest"
+    log = logging.getLogger("JESI").getChild(__module__)
 
+    def __init__(self,log_level=logging.DEBUG):
+        Market.log.setLevel(log_level)
+        pass
 
     def groups(self,market_group_id=None):
         """Not implemented

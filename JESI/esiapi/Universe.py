@@ -1,6 +1,7 @@
 
 from requests_futures.sessions import FuturesSession
 import collections
+import logging
 import requests
 import time
 
@@ -13,6 +14,11 @@ class Universe:
     """API Access to the /universe/ endpoints
     """
     base_url = "https://esi.tech.ccp.is/latest"
+    log = logging.getLogger("JESI").getChild(__module__)
+
+    def __init__(self,log_level=logging.DEBUG):
+        Universe.log.setLevel(log_level)
+        pass
 
 
     def bloodlines(self):
