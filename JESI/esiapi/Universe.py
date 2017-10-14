@@ -6,6 +6,7 @@ import requests
 import time
 
 from ..EVE import Item
+from ..SQL import SQL
 
 """TODO Update me
 """
@@ -15,10 +16,11 @@ class Universe:
     """
     base_url = "https://esi.tech.ccp.is/latest"
     log = logging.getLogger("JESI").getChild(__module__)
+    db = SQL()
 
     def __init__(self, cache=True, log_level=logging.DEBUG):
+        self.cache = cache
         Universe.log.setLevel(log_level)
-        pass
 
 
     def bloodlines(self):
@@ -183,7 +185,7 @@ class Universe:
         return response.json()
 
 
-    def types(self, type_id=None):
+    def types(self, type_id=None, cache=None):
         """Return completed list of request
 
         Keyword Arguments:
@@ -195,6 +197,11 @@ class Universe:
         None or a list/tuple), or a single element if only asked for a single 
         item.
         """
+
+        # TODO: Check the cache for the item FIRST
+        if cache is None:
+            cache = self.cache
+
         if type_id is None:
             type_ids = []
             with FuturesSession(max_workers=10) as session:
@@ -225,31 +232,53 @@ class Universe:
                     page += 1
             return type_ids
 
-        elif type(type_id) in [int,str]:
+        if isinstance(type_id,(int,str)):
+            if cache:
+                try:
+                    return self.db.get_item(type_id)
+                except ValueError:
+                    pass
             params = {"type_id": type_id}
             response = requests.get(self.base_url+f"/universe/types/{type_id}/",params=params)
             response.raise_for_status()
+            if cache:
+                self.db.insert_item(response.json())
+                self.db.commit()
             return response.json()
 
         elif isinstance(type_id, collections.Iterable):
+            type_ids = type_id
+            retVal = []
+            if cache:
+                cached_ids = []
+                for type_id in type_ids:
+                    if self.db.has_item(type_id):
+                        cached_ids.append(type_id)
+                        retVal.append(self.db.get_item(type_id))
+                type_ids = [x for x in type_ids if x not in cached_ids]
+
             session = FuturesSession(max_workers=10)
             request_list = []
             for next_type_id in type_id:
                 params = {"type_id": next_type_id}
                 response = session.get(self.base_url+f"/universe/types/{next_type_id}/",params=params)
                 request_list.append(response)
-
-            retVal = []
             for response in request_list:
                 result = response.result()
                 result.raise_for_status()
                 retVal.append(result.json())
+                if cache:
+                    self.db.insert_item(result.json())
+                    self.db.commit()
             return retVal
 
 
-    def typesIter(self, type_id=None):
+    def iter_types(self, type_id=None, cache=None):
         """As with types, but return an iterator
         """
+        if cache is None:
+            cache = self.cache
+
         if type_id is None:
             type_ids = []
             with FuturesSession(max_workers=10) as session:
@@ -280,36 +309,61 @@ class Universe:
                     futureQueue.append(future)
 
                     page += 1
+            return
 
         elif type(type_id) in [int,str]:
+            if cache:
+                try:
+                    yield self.db.get_item(type_id)
+                    return
+                except ValueError:
+                    pass
             params = {"type_id": type_id}
             response = requests.get(self.base_url+f"/universe/types/{type_id}/",params=params)
             response.raise_for_status()
+            if cache:
+                self.db.insert_item(response.json())
+                self.db.commit()
             yield response.json()
             return
 
         elif isinstance(type_id, collections.Iterable):
             future_list = []
+            type_ids = type_id
+            if cache:
+                cached_ids = []
+                for type_id in type_ids:
+                    try:
+                        yield self.db.get_item(type_id)
+                        cached_ids.append(type_id)
+                    except:
+                        pass
+                type_ids = [x for x in type_ids if x not in cached_ids]
+
             with FuturesSession(max_workers=16) as session:
-                for next_type_id in type_id:
-                    # print('q')
+                for next_type_id in type_ids:
                     params = {"type_id": next_type_id}
                     response = session.get(self.base_url+f"/universe/types/{next_type_id}/",params=params)
                     future_list.append(response)
                     idx = 0
                     while len(future_list) > 10:
-                        if future_list[idx%len(future_list)].done():
+                        if future_list[idx].done():
                             future = future_list.pop(idx)
                             result = future.result()
                             result.raise_for_status()
-                            # help(result)
-                            print(dir(result))
-                            print(result.headers)
-                            exit()
+                            if cache:
+                                self.db.insert_item(result.json())
+                                self.db.commit()
                             yield result.json()
+                        idx += 1
+                        idx %= len(future_list)
+
 
                 for future in request_list:
                     result = future.result()
                     result.raise_for_status()
+                    if cache:
+                        self.db.insert_item(result.json())
+                        self.db.commit()
                     yield result.json()
             return

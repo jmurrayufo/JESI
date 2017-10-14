@@ -9,6 +9,7 @@ from ..SQL.SQL import SQL
 class Item:
     log = logging.getLogger("JESI").getChild(__module__)
     db = SQL()
+
     def __init__(self,source,make_valid=True,cache=True):
         """Base Item class and interaction point.
 
@@ -30,7 +31,7 @@ class Item:
             self.name = None
             self.type_id = source
 
-        elif type(soruce) == Item:
+        elif type(source) == Item:
             self.capacity = source.capacity  #(number, optional): capacity number ,
             self.description = source.description  #(string): description string ,
             self.dogma_attributes = copy.deepcopy(source.dogma_attributes)  #(Array[get_universe_types_type_id_dogma_attribute], optional): dogma_attributes array ,
@@ -48,17 +49,36 @@ class Item:
             self.type_id = source.type_id  #(integer): type_id integer ,
             self.volume = source.volume  #(number, optional): volume number
         
+        elif type(source) == dict:
+            self.capacity = source.get('capacity',0)
+            self.description = source.get('description','')
+            self.dogma_attributes = source.get('dogma_attributes',[])
+            self.dogma_effects = source.get('dogma_effects',[])
+            self.graphic_id = source.get('graphic_id','')
+            self.group_id = source.get('group_id',None)
+            self.icon_id = source.get('icon_id',None)
+            self.market_group_id = source.get('market_group_id',None)
+            self.mass = source.get('mass')
+            self.name = source.get('name')
+            self.packaged_volume = source.get('packaged_volume',0)
+            self.portion_size = source.get('portion_size',0)
+            self.published = source.get('published',False)
+            self.radius = source.get('radius',0)
+            self.type_id = source.get('type_id')
+            self.volume = source.get('volume',0)
+
         # If we are not a copy, try to create
         if make_valid:
-            # TODO: We need to search SQL *first*!
-            if self.type_id == None:
-                # We need to find out our ID first!
-                data = Search().search(self.name, ["inventorytype"], strict=True)
-                if len(data['inventorytype']) != 1:
-                    raise ValueError(f"Couldn't find {self.name} in search uniquely!")
-                self.type_id = data['inventorytype'][0]
-
-            data = Universe().types(self.type_id)
+            try:
+                data = self.db.get_item(self)
+            except ValueError:
+                if self.type_id == None:
+                    # We need to find out our ID first!
+                    data = Search().search(self.name, ["inventorytype"], strict=True)
+                    if len(data) != 1:
+                        raise ValueError(f"Couldn't find '{self.name}' in search uniquely!")
+                    self.type_id = data['inventorytype'][0]
+                data = Universe().types(self.type_id)
             
             self.capacity = data.get('capacity',0)
             self.description = data.get('description','')
@@ -80,3 +100,26 @@ class Item:
 
     def __str__(self):
         return f"Item<{self.name}>"
+
+
+    def dict(self):
+        """Return a dict that could create this Item
+        """
+        ret_val = dict()
+        ret_val['capacity'] = getattr(self,'capacity',None)
+        ret_val['description'] = getattr(self,'description',None)
+        ret_val['dogma_attributes'] = getattr(self,'dogma_attributes',None)
+        ret_val['dogma_effects'] = getattr(self,'dogma_effects',None)
+        ret_val['graphic_id'] = getattr(self,'graphic_id',None)
+        ret_val['group_id'] = getattr(self,'group_id',None)
+        ret_val['icon_id'] = getattr(self,'icon_id',None)
+        ret_val['market_group_id'] = getattr(self,'market_group_id',None)
+        ret_val['mass'] = getattr(self,'mass',None)
+        ret_val['name'] = getattr(self,'name')
+        ret_val['packaged_volume'] = getattr(self,'packaged_volume',None)
+        ret_val['portion_size'] = getattr(self,'portion_size',None)
+        ret_val['published'] = getattr(self,'published',None)
+        ret_val['radius'] = getattr(self,'radius',None)
+        ret_val['type_id'] = getattr(self,'type_id')
+        ret_val['volume'] = getattr(self,'volume',None)
+        return ret_val
