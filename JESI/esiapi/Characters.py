@@ -324,11 +324,33 @@ class Characters:
         return response.json()
 
 
-    def planets(self, character_id,planet_id=None):
-        """Not implemented
+    def planets(self, character_id, planet_id=None):
+        """Returns a list of all planetary colonies owned by a character or 
+        Returns full details on the layout of a single planetary colony, 
+        including links, pins and routes. Note: Planetary information is only 
+        recalculated when the colony is viewed through the client. Information 
+        will not update until this criteria is met.
         """
-        raise NotImplementedError
-        #:/{planet_id}/
+        if planet_id is None:
+
+            params = {
+                "character_id": character_id,
+                "token": f"{self.token}"
+            }
+            response = requests.get(self.base_url+f"/characters/{character_id}/planets/",params=params)
+            response.raise_for_status()
+            return response.json()
+        
+        # else:
+
+        params = {
+            "character_id": character_id,
+            "planet_id": planet_id,
+            "token": f"{self.token}"
+        }
+        response = requests.get(self.base_url+f"/characters/{character_id}/planets/{planet_id}",params=params)
+        response.raise_for_status()
+        return response.json()
 
 
     def portrait(self, character_id):

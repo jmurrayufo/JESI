@@ -254,6 +254,7 @@ class SQL:
             raise ValueError
         return data[0]
 
+
     def get_items(self, filter=None):
         """Check if given item is in the db
 
