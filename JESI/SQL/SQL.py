@@ -199,7 +199,6 @@ class SQL:
         else:
             raise TypeError(f"Item {item} is of type {type(item)}, not {Item.Item}")
 
-
     def clean_items(self):
         """Drop items from the items table
 
@@ -254,7 +253,6 @@ class SQL:
             raise ValueError
         return data[0]
 
-
     def get_items(self, filter=None):
         """Check if given item is in the db
 
@@ -271,7 +269,6 @@ class SQL:
         self.c.execute("SELECT * FROM items")
         data = self.c.fetchall()
         return data
-
 
     def has_item(self, item):
         """Check if given item is in the db
@@ -361,3 +358,4 @@ class SQL:
         except sqlite3.IntegrityError:
             self.log.error(f"Failed to insert {item}")
             self.log.error("Continuing")
+
