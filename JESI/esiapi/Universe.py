@@ -165,13 +165,17 @@ class Universe:
     def system_jumps(self):
         """Not implemented
         """
-        raise NotImplementedError
+        response = requests.get(self.base_url+f"/universe/system_jumps/")
+        response.raise_for_status()
+        return response.json()
 
 
     def system_kills(self):
         """Not implemented
         """
-        raise NotImplementedError
+        response = requests.get(self.base_url+f"/universe/system_kills/")
+        response.raise_for_status()
+        return response.json()
 
 
     def systems(self, system_id=None):

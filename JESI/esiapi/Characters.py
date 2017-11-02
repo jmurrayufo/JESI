@@ -384,15 +384,25 @@ class Characters:
     def skillqueue(self, character_id):
         """Not implemented
         """
-        raise NotImplementedError
-        #:/
+        params = {
+            "character_id": character_id,
+            "token": f"{self.token}"
+        }
+        response = requests.get(self.base_url+f"/characters/{character_id}/skillqueue/",params=params)
+        response.raise_for_status()
+        return response.json()
 
 
     def skills(self, character_id):
         """Not implemented
         """
-        raise NotImplementedError
-        #:/
+        params = {
+            "character_id": character_id,
+            "token": f"{self.token}"
+        }
+        response = requests.get(self.base_url+f"/characters/{character_id}/skills/",params=params)
+        response.raise_for_status()
+        return response.json()
 
 
     def standings(self, character_id):
