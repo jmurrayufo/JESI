@@ -62,7 +62,7 @@ class Market:
         return
 
 
-    def orders(self, region_id,page=-1,type_id=None):
+    def orders(self, region_id, page=-1, type_id=None):
         """Return orders for a region
 
         Keyword arguments:
@@ -103,7 +103,7 @@ class Market:
             raise AttributeError("Unknown argument combo")
 
 
-    def ordersIter(self, region_id,type_id=None):
+    def ordersIter(self, region_id, type_id=None):
         """Return orders for a region
 
         Keyword Arguments:
@@ -124,7 +124,7 @@ class Market:
             i += 1
 
 
-    def types(self, region_id,page=-1):
+    def types(self, region_id, page=-1):
         """Return a list of type IDs that have active orders in the region, for efficient market indexing.
         """
         returnList = []
@@ -141,7 +141,7 @@ class Market:
             page += 1
 
 
-    def typesIter(self, region_id,page=-1):
+    def typesIter(self, region_id, page=-1):
         page = 1
         while 1:
             params = {'page':page}
