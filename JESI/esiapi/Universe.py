@@ -7,6 +7,7 @@ import time
 
 from ..EVE import Item
 from ..SQL import SQL
+from .Token import Token
 
 """TODO Update me
 """
@@ -21,6 +22,7 @@ class Universe:
     def __init__(self, cache=True, log_level=logging.DEBUG):
         self.cache = cache
         Universe.log.setLevel(log_level)
+        self.token = Token()
 
 
     def bloodlines(self):
@@ -159,7 +161,14 @@ class Universe:
     def structures(self, structure_id):
         """Not implemented
         """
-        raise NotImplementedError
+        params = {
+            "token": f"{self.token}"
+        }
+        response = requests.get(
+            self.base_url+f"/universe/structures/{structure_id}",
+            params=params)
+        response.raise_for_status()
+        return response.json()
 
 
     def system_jumps(self):

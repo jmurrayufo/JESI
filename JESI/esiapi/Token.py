@@ -26,7 +26,7 @@ class Token:
             with open(Token.token_file,'r') as fp:
                 data = json.load(fp)
             Token.refreshToken = data['refresh_token']
-            Token.expiresAt = datetime.datetime.now()
+            Token.expiresAt = datetime.datetime.now()-datetime.timedelta(seconds=60)
             self._refreshToken()
         else:
             self.authorize()
@@ -34,7 +34,7 @@ class Token:
 
 
     def __str__(self):
-        if datetime.datetime.now() > Token.expiresAt:
+        if datetime.datetime.now() > Token.expiresAt - datetime.timedelta(seconds=60):
             self._refreshToken()
         return f"{Token.accessToken}"
 
@@ -63,6 +63,7 @@ class Token:
         Token.accessToken = response['access_token']
         Token.refreshToken = response['refresh_token']
         Token.expiresAt = datetime.datetime.now() + datetime.timedelta(seconds=response['expires_in'])
+
 
 
     def authHeaders(self):
