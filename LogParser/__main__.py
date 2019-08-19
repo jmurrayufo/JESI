@@ -38,10 +38,12 @@ for time_box in time_boxes[:-1]:
     print(f"Time Delta: {time_box}")
     # Handy data shortcuts
     data = parser.data[time_box] 
-    box_seconds = time_box.total_seconds()
+    box_seconds = max(1,time_box.total_seconds())
     # TODO: Handle final timebox with some sanity
     print(f"  Total Damage Sent: {data['damage_to']:,.0f} ({data['damage_to']/box_seconds:,.1f} dps)")
     print(f"  Total Damage Tanked: {data['damage_from']:,.0f} ({data['damage_from']/box_seconds:,.1f} dps)")
+    #print(f"  Bounties Collected: {data['isk']} ISK")
+    print(f"  Bounties Collected: {data['isk']:,.2f} ISK ({data['isk']/box_seconds*60*60/1e6:,.2f} Misk/hr)")
     
     if len(list(data['damage_ship_to'].keys())):
         print(f"  Top Damage Done Target:", end="")
@@ -71,17 +73,19 @@ for time_box in time_boxes[:-1]:
             print(f" {_system} ({data['damage_system_from'][_system]:,.0f})")
     print()
 
-session_seconds =  (parser._last_dt - parser._first_dt ).total_seconds()
+session_seconds =  max(1, (parser._last_dt - parser._first_dt ).total_seconds())
 
 for time_box in time_boxes[-1:]:
     print(f"Time Delta: {timedelta(seconds=session_seconds)} (Current Session)")
     # Handy data shortcuts
     data = parser.data[time_box] 
-    box_seconds = time_box.total_seconds()
+    box_seconds = session_seconds
     # TODO: Handle final timebox with some sanity
     print(f"  Total Damage Sent: {data['damage_to']:,.0f} ({data['damage_to']/box_seconds:,.1f} dps)")
     print(f"  Total Damage Tanked: {data['damage_from']:,.0f} ({data['damage_from']/box_seconds:,.1f} dps)")
+    print(f"  Bounties Collected: {data['isk']:,.2f} ISK ({data['isk']/box_seconds*60*60/1e6:,.2f} Misk/hr)")
     
+    break
     if len(list(data['damage_ship_to'].keys())):
         print(f"  Top Damage Done Target:")
         for ship in list(data['damage_ship_to'].keys())[:]:

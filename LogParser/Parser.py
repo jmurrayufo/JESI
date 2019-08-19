@@ -20,6 +20,7 @@ class Parser:
         # Init data array
         self.data = defaultdict(lambda: 
             {
+                'isk':0,
                 'damage_to':0,
                 'damage_from':0,
                 'damage_ship_to':defaultdict(lambda: 0),
@@ -45,15 +46,21 @@ class Parser:
 
                 if self._first_dt is None and r is not None:
                     self._first_dt = r.datetime
-
-                if type(r) is not Row.Combat:
+                if r is None:
                     continue
                 self._last_dt = r.datetime
 
-                if r.to:
-                    self._parse_to(r)
-                else:
-                    self._parse_from(r)
+                if type(r) is Row.Bounty:
+                    self._parse_isk(r)
+                    continue
+
+                if type(r) is Row.Combat:
+                    if r.to:
+                        self._parse_to(r)
+                    else:
+                        self._parse_from(r)
+                    continue
+
         if self._first_dt == None:        
             self._first_dt = copy.copy(self.now)
 
@@ -68,6 +75,11 @@ class Parser:
             self.data[time_delta]['damage_system_to'] = dict(sorted(self.data[time_delta]['damage_system_to'].items(), key=lambda kv: kv[1], reverse=True))
             self.data[time_delta]['damage_system_from'] = dict(sorted(self.data[time_delta]['damage_system_from'].items(), key=lambda kv: kv[1], reverse=True))
 
+
+    def _parse_isk(self, r):
+        for time_delta in self.time_boxes:
+            if self.now - r.datetime < time_delta:
+                self.data[time_delta]['isk'] += r.isk
 
     def _parse_to(self, r):
         for time_delta in self.time_boxes:
