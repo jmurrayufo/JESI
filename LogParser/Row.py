@@ -73,7 +73,7 @@ class Combat:
         self.damage_type = 'Unknown'
 
     def __str__(self):
-        return f"{self.datetime} {self.amount} {'to' if self.to else 'from'} @ {self.other} "
+        return f"{self.datetime} {self.amount} {'to' if self.to else 'from'} @ {self.source_target} "
 
 class Unknown:
     def __init__(self, match_object):
