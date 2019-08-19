@@ -26,8 +26,8 @@ class Parser:
         self._to_60min = 0
         self._from_60min = 0
 
-        self._sources_60min = defaultdict(lambda: 0)
         self._targets_60min = defaultdict(lambda: 0)
+        self._sources_60min = defaultdict(lambda: 0)
 
         self._type_to_60min = defaultdict(lambda: 0)
         self._type_from_60min = defaultdict(lambda: 0)
@@ -62,6 +62,17 @@ class Parser:
         if self._first_dt == None:        
             self._first_dt = copy.copy(self.now)
 
+        # Sort various dicts
+
+        self._targets_60min = dict(sorted(self._targets_60min.items(), key=lambda kv: kv[1], reverse=True))
+        self._sources_60min = dict(sorted(self._sources_60min.items(), key=lambda kv: kv[1], reverse=True))
+
+        self._type_to_60min = dict(sorted(self._type_to_60min.items(), key=lambda kv: kv[1], reverse=True))
+        self._type_from_60min = dict(sorted(self._type_from_60min.items(), key=lambda kv: kv[1], reverse=True))
+
+        self._system_to_60min = dict(sorted(self._system_to_60min.items(), key=lambda kv: kv[1], reverse=True))
+        self._system_from_60min = dict(sorted(self._system_from_60min.items(), key=lambda kv: kv[1], reverse=True))
+
 
     def _parse_to(self, r):
         self._to += r.amount
@@ -73,6 +84,7 @@ class Parser:
             self._to_30min += r.amount
         if self.now - r.datetime < self._60min:
             self._to_60min += r.amount
+        if self.now - r.datetime < self._60min:
             self._targets_60min[r.source_target] += r.amount
             self._type_to_60min[r.damage_type] += r.amount
             self._system_to_60min[r.system] += r.amount
@@ -87,6 +99,7 @@ class Parser:
             self._from_30min += r.amount
         if self.now - r.datetime < self._60min:
             self._from_60min += r.amount
+        if self.now - r.datetime < self._60min:
             self._sources_60min[r.source_target] += r.amount
             self._type_from_60min[r.damage_type] += r.amount
             self._system_from_60min[r.system] += r.amount

@@ -69,7 +69,7 @@ class Combat:
         self.amount = int(match_object.group(4))
         self.to = match_object.group(5) == 'to'
         self.source_target = match_object.group(6)
-        self.system = match_object.group(7)
+        self.system = match_object.group(7) if match_object.group(7) is not None else "Unknown"
         # TODO: Parse this into meantingful data!
         self.damage_type = 'Unknown'
 
