@@ -10,39 +10,34 @@ class Parser:
         self.log_path = log_path
 
 
-    def parse(self):
-        self._to = 0
-        self._from = 0
+    def parse(self, time_boxes):
+        """
+        Accept list of time buckets to fill. Return a dict 
+        """
 
-        self._to_1min = 0
-        self._from_1min = 0
+        self.time_boxes = list(time_boxes)
 
-        self._to_5min = 0
-        self._from_5min = 0
+        # Init data array
+        self.data = defaultdict(lambda: 
+            {
+                'damage_to':0,
+                'damage_from':0,
+                'damage_ship_to':defaultdict(lambda: 0),
+                'damage_ship_from':defaultdict(lambda: 0),
+                'damage_type_to':defaultdict(lambda: 0),
+                'damage_type_from':defaultdict(lambda: 0),
+                'damage_system_to':defaultdict(lambda: 0),
+                'damage_system_from':defaultdict(lambda: 0)
+            }
+        )
 
-        self._to_30min = 0
-        self._from_30min = 0
-
-        self._to_60min = 0
-        self._from_60min = 0
-
-        self._targets_60min = defaultdict(lambda: 0)
-        self._sources_60min = defaultdict(lambda: 0)
-
-        self._type_to_60min = defaultdict(lambda: 0)
-        self._type_from_60min = defaultdict(lambda: 0)
-
-        self._system_to_60min = defaultdict(lambda: 0)
-        self._system_from_60min = defaultdict(lambda: 0)
+        # self.timeboxes.append(datetime.timedelta.max)
 
         self.now = datetime.datetime.now() + datetime.timedelta(hours=6)
-        self._1min = datetime.timedelta(minutes=1)
-        self._5min = datetime.timedelta(minutes=5)
-        self._30min = datetime.timedelta(minutes=30)
-        self._60min = datetime.timedelta(minutes=60)
 
         self._first_dt = None
         self._last_dt = copy.copy(self.now)
+
         with open(self.log_path, 'r') as fp:
             for line in fp:
                 # print(line,end='')
@@ -63,46 +58,32 @@ class Parser:
             self._first_dt = copy.copy(self.now)
 
         # Sort various dicts
+        for time_delta in self.time_boxes:
+            self.data[time_delta]['damage_ship_to'] = dict(sorted(self.data[time_delta]['damage_ship_to'].items(), key=lambda kv: kv[1], reverse=True))
+            self.data[time_delta]['damage_ship_from'] = dict(sorted(self.data[time_delta]['damage_ship_from'].items(), key=lambda kv: kv[1], reverse=True))
 
-        self._targets_60min = dict(sorted(self._targets_60min.items(), key=lambda kv: kv[1], reverse=True))
-        self._sources_60min = dict(sorted(self._sources_60min.items(), key=lambda kv: kv[1], reverse=True))
+            self.data[time_delta]['damage_type_to'] = dict(sorted(self.data[time_delta]['damage_type_to'].items(), key=lambda kv: kv[1], reverse=True))
+            self.data[time_delta]['damage_type_from'] = dict(sorted(self.data[time_delta]['damage_type_from'].items(), key=lambda kv: kv[1], reverse=True))
 
-        self._type_to_60min = dict(sorted(self._type_to_60min.items(), key=lambda kv: kv[1], reverse=True))
-        self._type_from_60min = dict(sorted(self._type_from_60min.items(), key=lambda kv: kv[1], reverse=True))
-
-        self._system_to_60min = dict(sorted(self._system_to_60min.items(), key=lambda kv: kv[1], reverse=True))
-        self._system_from_60min = dict(sorted(self._system_from_60min.items(), key=lambda kv: kv[1], reverse=True))
+            self.data[time_delta]['damage_system_to'] = dict(sorted(self.data[time_delta]['damage_system_to'].items(), key=lambda kv: kv[1], reverse=True))
+            self.data[time_delta]['damage_system_from'] = dict(sorted(self.data[time_delta]['damage_system_from'].items(), key=lambda kv: kv[1], reverse=True))
 
 
     def _parse_to(self, r):
-        self._to += r.amount
-        if self.now - r.datetime < self._1min:
-            self._to_1min  += r.amount
-        if self.now - r.datetime < self._5min:
-            self._to_5min += r.amount
-        if self.now - r.datetime < self._30min:
-            self._to_30min += r.amount
-        if self.now - r.datetime < self._60min:
-            self._to_60min += r.amount
-        if self.now - r.datetime < self._60min:
-            self._targets_60min[r.source_target] += r.amount
-            self._type_to_60min[r.damage_type] += r.amount
-            self._system_to_60min[r.system] += r.amount
+        for time_delta in self.time_boxes:
+            if self.now - r.datetime < time_delta:
+                self.data[time_delta]['damage_to'] += r.amount
+                self.data[time_delta]['damage_ship_to'][r.source_target] += r.amount
+                self.data[time_delta]['damage_type_to'][r.damage_type] += r.amount
+                self.data[time_delta]['damage_system_to'][r.system] += r.amount
 
     def _parse_from(self, r):
-        self._from += r.amount
-        if self.now - r.datetime < self._1min:
-            self._from_1min  += r.amount
-        if self.now - r.datetime < self._5min:
-            self._from_5min += r.amount
-        if self.now - r.datetime < self._30min:
-            self._from_30min += r.amount
-        if self.now - r.datetime < self._60min:
-            self._from_60min += r.amount
-        if self.now - r.datetime < self._60min:
-            self._sources_60min[r.source_target] += r.amount
-            self._type_from_60min[r.damage_type] += r.amount
-            self._system_from_60min[r.system] += r.amount
+        for time_delta in self.time_boxes:
+            if self.now - r.datetime < time_delta:
+                self.data[time_delta]['damage_from'] += r.amount
+                self.data[time_delta]['damage_ship_from'][r.source_target] += r.amount
+                self.data[time_delta]['damage_type_from'][r.damage_type] += r.amount
+                self.data[time_delta]['damage_system_from'][r.system] += r.amount
 
 
 
