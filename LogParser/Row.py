@@ -35,8 +35,8 @@ class Row:
             (.*)                    # Source/Target
             </b><font\ size=\d+><color=0x\w+>
             \s-\s
-            (.*)                    # Weapon System
-            \s-\s
+            (?:(.*)                    # Weapon System
+            \s-\s)?
             (.*)                    # Hit description
         """.format(re_matchers['base'])
         re_matchers['generic'] = "{}".format(re_matchers['base'])
@@ -52,6 +52,7 @@ class Row:
         match_object = re.search(re_matchers['generic'], line, re.X)
         if match_object and match_object.group(3) in ['notify', 'question', 'None', 'warning']:
             return Generic(match_object)
+        # print(re_matchers['combat_hit'])
         return Unknown(match_object)
 
 
