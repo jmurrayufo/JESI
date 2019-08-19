@@ -20,13 +20,13 @@ class Display:
         # Loop through all but the last (special) timebox
         for time_box in self.args.time_boxes[:-1]:
             print(f"Time Delta: {time_box}")
+
             # Handy data shortcuts
             data = self.parser.data[time_box] 
             box_seconds = max(1,time_box.total_seconds())
-            # TODO: Handle final timebox with some sanity
+
             print(f"  Total Damage Sent: {data['damage_to']:,.0f} ({data['damage_to']/box_seconds:,.1f} dps)")
             print(f"  Total Damage Tanked: {data['damage_from']:,.0f} ({data['damage_from']/box_seconds:,.1f} dps)")
-            #print(f"  Bounties Collected: {data['isk']} ISK")
             print(f"  Bounties Collected: {data['isk']:,.2f} ISK ({data['isk']/box_seconds*60*60/1e6:,.2f} Misk/hr)")
             
             if self.args.box_totals > 0:
@@ -46,12 +46,14 @@ class Display:
 
         session_seconds =  max(1, (self.parser._last_dt - self.parser._first_dt ).total_seconds())
 
+        # Special loop for last timebox. Keeping this in a forloop allows for handle break statements
         for time_box in self.args.time_boxes[-1:]:
             print(f"Time Delta: {timedelta(seconds=session_seconds)} (Current Session)")
+
             # Handy data shortcuts
             data = self.parser.data[time_box] 
             box_seconds = session_seconds
-            # TODO: Handle final timebox with some sanity
+
             print(f"  Total Damage Sent: {data['damage_to']:,.0f} ({data['damage_to']/box_seconds:,.1f} dps)")
             print(f"  Total Damage Tanked: {data['damage_from']:,.0f} ({data['damage_from']/box_seconds:,.1f} dps)")
             print(f"  Bounties Collected: {data['isk']:,.2f} ISK ({data['isk']/box_seconds*60*60/1e6:,.2f} Misk/hr)")
